@@ -72,7 +72,7 @@ export class AuthService {
   }
 
   async generateAccessToken(): Promise<string> {
-    return signJwt(this.generateAccessPayload(), this.authConfig.jwtSecret, {expiresIn: this.authConfig.accessExpire});
+    return signJwt(this.generateAccessPayload(), this.authConfig.jwtSecret, {expiresIn: this.authConfig.accessExpire as SignOptions["expiresIn"]});
   }
 
   async verifyRefreshToken(refreshToken: string): Promise<RefreshToken> {
@@ -91,7 +91,7 @@ export class AuthService {
 
     this.validRefreshTokens.set(user, payload.id);
 
-    return signJwt(payload, this.authConfig.jwtSecret, {expiresIn: this.authConfig.refreshExpire});
+    return signJwt(payload, this.authConfig.jwtSecret, {expiresIn: this.authConfig.refreshExpire as SignOptions["expiresIn"]});
   }
 
   async extendRefreshToken(oldToken: RefreshToken): Promise<string> {
@@ -103,6 +103,6 @@ export class AuthService {
 
     this.validRefreshTokens.set(payload.user, payload.id);
 
-    return signJwt(payload, this.authConfig.jwtSecret, {expiresIn: this.authConfig.refreshExpire});
+    return signJwt(payload, this.authConfig.jwtSecret, {expiresIn: this.authConfig.refreshExpire as SignOptions["expiresIn"]});
   }
 }
